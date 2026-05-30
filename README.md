@@ -56,7 +56,7 @@ func _ready():
 	$Toast.show_toast("Hata oluştu!", 3.0)
 ```
 ---
-Developer: [@byteakif]("github.com/byteakif")
+Developer: [@byteakif]("https://github.com/byteakif")
 
 ## Lisans
 
