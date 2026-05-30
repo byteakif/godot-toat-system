@@ -61,4 +61,3 @@ Developer: [@byteakif](https://github.com/byteakif)
 ## Lisans
 
 MIT License - Ticari projelerde özgürce kullanıla bilir.
-```
