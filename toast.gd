@@ -6,6 +6,7 @@ var label: Label
 var margin: MarginContainer
 var tween: Tween
 
+enum ToastType { INFO, SUCCESS, WARNING, ERROR }
 
 func _ready():
 	canvas = CanvasLayer.new()
@@ -49,8 +50,54 @@ func set_toast_position():
 		screen_size.y - bottom_offset
 	)
 
-func show_toast(text: String, time := .5):
+func show_toast(text: String, time := 0.5):
 	label.text = text
+
+	if tween:
+		tween.kill()
+
+	panel.visible = true
+	panel.modulate.a = 0.0
+	panel.scale = Vector2(0.9, 0.9)
+
+	set_toast_position()
+	tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.15)
+	tween.parallel().tween_property(panel, "scale", Vector2(1.0, 1.0), 0.15)
+	tween.tween_interval(time)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.2)
+	tween.parallel().tween_property(panel, "scale", Vector2(0.95, 0.95), 0.2)
+
+	await tween.finished
+	panel.visible = false
+
+func costumtype_show_toast(text: String, time := 0.5, toast_type := ToastType.INFO):
+	label.text = text
+	
+	var style = StyleBoxFlat.new()
+	style.corner_radius_top_left = 16
+	style.corner_radius_top_right = 16
+	style.corner_radius_bottom_left = 16
+	style.corner_radius_bottom_right = 16
+	style.shadow_color = Color(0, 0, 0, 0.4)
+	style.shadow_size = 8
+	
+	match toast_type:
+		ToastType.SUCCESS:
+			style.bg_color = Color(0.2, 0.5, 0.2, 0.95)
+			label.add_theme_color_override("font_color", Color.WHITE)
+		ToastType.ERROR:
+			style.bg_color = Color(0.7, 0.2, 0.2, 0.95)
+			label.add_theme_color_override("font_color", Color.WHITE)
+		ToastType.WARNING:
+			style.bg_color = Color(0.7, 0.5, 0.2, 0.95)
+			label.add_theme_color_override("font_color", Color.BLACK)
+		ToastType.INFO:
+			style.bg_color = Color(0.12, 0.12, 0.12, 0.95)
+			label.add_theme_color_override("font_color", Color.WHITE)
+	
+	panel.add_theme_stylebox_override("panel", style)
+	
 	if tween:
 		tween.kill()
 
