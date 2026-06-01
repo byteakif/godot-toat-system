@@ -54,6 +54,10 @@ func _ready():
 	$Toast.show_toast("Oyun başladı!")
 	$Toast.show_toast("Coin +10", 1.5)
 	$Toast.show_toast("Hata oluştu!", 3.0)
+	$Toast.costuminfo_show_toast("işlem başarılı", SUCCESS)
+	$Toast.costuminfo_show_toast("Hata oluştu!", ERROR)
+	$Toast.costuminfo_show_toast("Burda çökme oluşabilir", WARNING)
+	$Toast.costuminfo_show_toast("İşlem başarılı", INFO)
 ```
 ---
 Developer: [@byteakif](https://github.com/byteakif)
